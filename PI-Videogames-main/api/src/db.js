@@ -6,11 +6,12 @@ const path = require('path');
 //   DB_USER, DB_PASSWORD, DB_HOST,
 // } = process.env;
 
-const DB_USER="postgres"
-const DB_PASSWORD="postgres123"
+const DB_USER=usuario
+const DB_PASSWORD=clave de postgres
 const DB_HOST="localhost"
 const DB_PORT=5432
-const API_KEY="1948def9603648f6a45a0c66db9bda3d"
+const API_KEY=api_key
+const URL="https://api.rawg.io/api";
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/videogames`, {
   logging: false, // set to console.log to see the raw SQL queries
@@ -36,7 +37,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Videogame, Genre } = sequelize.models;
+const { Videogame, Genre } = sequelize.models; 
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -47,5 +48,6 @@ Genre.belongsToMany(Videogame, {through: "Videogame_Genre"});
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
-  API_KEY
+  API_KEY,
+  URL
 };

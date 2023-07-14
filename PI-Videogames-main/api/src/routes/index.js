@@ -5,7 +5,7 @@ const { Router } = require('express');
 const videogamesRouter=require("./videogamesRouter");
 const videogamesID=require("./videogamesID");
 const videogamesName=require("./videogamesName");
-const createGame=require("./createGame");
+const newGame=require("./newGame");
 const genres=require("./genres")
 
 const router = Router();
@@ -16,7 +16,7 @@ const router = Router();
 router.use("/videogames", videogamesRouter);
 router.use("/videogames/:id", videogamesID);
 router.use("/videogames?name=", videogamesName);
-router.use("/videogames", createGame);
+router.use("/videogames", newGame);
 router.use("/genres", genres);
 
 module.exports = router;

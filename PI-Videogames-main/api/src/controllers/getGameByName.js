@@ -1,36 +1,50 @@
-require('dotenv').config();
+// require('dotenv').config();
 const axios=require("axios");
-const URL = "https://api.rawg.io/api/games?search";
+const {URL} = require("../db");
 const {API_KEY} = require("../db");
 const { Videogame, Genre }=require("../db");
 const {Op}=require("sequelize")
 
-const getVideogameByName=async (name)=>{
+const getVideogameByName=async (nameTitle)=>{
     try{
-        const {data}=await axios.get(`${URL}=${name}&key=${API_KEY}`);
+        const videogamesArray=[];
+        const {data}=await axios.get(`${URL}=${nameTitle}&key=${API_KEY}`);
         if(data && data.results.length>0){
-            const videogamesFilt=data.results.map(({id, name, background_image, genres, rating})=>{
-                return {
-                    id, name, background_image, genres, rating
-                }
-            })
-            console.log( videogamesFilt);
+            for(let i = 0; i < 15; i++){
+                const { id, name, background_image, genres, rating }=data.results[i];
+                const generos= genres.map((genre)=> genre.name);
+                videogamesArray.push({ id, name, background_image, generos, rating })
+            }
         } else{
             const videogamesFilt=await Videogame.findAll({
-                where: {[Op.iLike]:{name: `%${name}%`}}
+                where: {
+                    name:{[Op.iLike]: `%${nameTitle}%`}
+                },
+                include:{
+                    model:Genre,
+                    attributes:["name"],
+                    through:{
+                        attributes:[]
+                    }
+                }
             })
 
-            if(videogamesFilt.length===0){
-                return {error:"No existe este videojuego"}  
+            if(videogamesFilt.length>0){
+                for(let i = 0; i < videogamesArray.length; i++){
+                    const { id, name, background_image, Genres, rating }=videogamesFilt[i];
+                    const generos= Genres.map((genre)=> genre.name);
+                    videogamesArray.push({ id, name, background_image, generos, rating })
+                }
             }
-            return videogamesFilt;
         }
+
+        return videogamesArray;
     } catch(error){
         console.error(error);
         throw new Error("No existe este videojuego", error);
     }
 }
 
-getVideogameByName("gr")
+// getVideogameByName("grand")
 
 module.exports=getVideogameByName;

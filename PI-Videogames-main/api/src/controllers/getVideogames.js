@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios=require("axios");
-const URL = 'https://api.rawg.io/api/games';
+const {URL} = require("../db");
 const {API_KEY} = require("../db");
 const { Videogame, Genre }=require("../db");
 
@@ -26,7 +26,5 @@ const getAllVideogames= async ()=>{
         throw new Error("Error al obtener los títulos")
     }
 }
-
-getAllVideogames();
 
 module.exports={getAllVideogames, URL}
