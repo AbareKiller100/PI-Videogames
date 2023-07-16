@@ -7,7 +7,7 @@ const path = require('path');
 // } = process.env;
 
 const DB_USER=usuario
-const DB_PASSWORD=clave de postgres
+const DB_PASSWORD= constraseña
 const DB_HOST="localhost"
 const DB_PORT=5432
 const API_KEY=api_key
