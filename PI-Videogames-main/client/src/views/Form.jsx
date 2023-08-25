@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from "react-redux"
-import validation from '../validation'
-import { getAllGenres, removeDetail } from '../redux/actions'
+import validation from '../validation.js'
+import { getAllGenres, removeDetail } from '../redux/actions.js'
 import axios from 'axios'
-import { URL } from '../App'
+// import { URL } from '../App'
 
 const Form = () => {
     const dispatch=useDispatch();
@@ -42,14 +42,14 @@ const Form = () => {
     }
 
     const selectPlatforms=(event)=>{
-        setData({...info, platforms:[event.target.value]})
+        setInfo({...info, platforms:[event.target.value]})
         setErrors(validation({...info, platforms:[event.target.value]}))
     }
 
     const createVideogame=(event)=>{
         event.preventDefault();
         if(errors.name === '' && errors.description === '' && errors.background_image === '' && errors.platforms === '' && errors.released === '' && errors.rating === '' && errors.genres === ''){
-            axios.post(URL, info)
+            axios.post("localhost:3001", info)
             .then(response=> alert(response.data))
             .catch(error=> alert(error))
         } else{
@@ -81,7 +81,7 @@ const Form = () => {
 
             <div>
                 <label htmlFor="platforms">Platforms:</label>
-                <input type="text" name='platforms' value={info.platforms} onChange={handleInputChange}/>
+                <input type="text" name='platforms' value={info.platforms} onChange={selectPlatforms}/>
                 <span>{errors.platforms}</span>
             </div>
 

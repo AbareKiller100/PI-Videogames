@@ -6,25 +6,39 @@ const { Videogame, Genre }=require("../db");
 
 const getAllVideogames= async ()=>{
     try {
-        console.log(URL);
-        const {data}=await axios.get(`${URL}?key=${API_KEY}`);
-        if(data && data.results.length>0){
-            const videoGames=data.results.map(({id, name, background_image, genres, rating})=>{
+        let URLs=`${URL}/games?key=${API_KEY}`;
+        const videoGames=[];
+
+        for(let i = 0; i < 5; i++){
+            const {data} =await axios.get(URLs);
+
+            const videogamesAPI=data.results.map(({id, name, background_image, genres, rating})=>{
                 const generos=genres.map((genre)=> genre.name)
-                return {
-                    id, name, background_image, generos, rating
+                videoGames.push({id, name, background_image, generos, rating})
+            })
+            URLs=data.next;
+        }
+            const videogamesDB=await Videogame.findAll({
+                include:{
+                    model: Genre,
+                    attributes:["name"],
+                    through:{
+                        attributes:[]
+                    }
                 }
             })
+
+            for(let i = 0; i < videogamesDB.length; i++){
+                const {id, name, background_image, Genres, rating}=videogamesDB[i];
+                const generos= Genres.map((gen)=> gen.name)
+                videoGames.push({id, name, background_image, generos, rating})
+            }
+
             return videoGames;
-        } else{
-            const videoGames=await Videogame.findAll();
-            if(videoGames.length===0){return {error:"No se encontraron juegos."}}
-            return videoGames;
-        }
     } catch (error) {
         console.error(error);
         throw new Error("Error al obtener los títulos")
     }
 }
 
-module.exports={getAllVideogames, URL}
+module.exports= getAllVideogames

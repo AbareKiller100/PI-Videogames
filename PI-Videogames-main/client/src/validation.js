@@ -5,7 +5,8 @@ const validation=(info)=>{
         errors.name="Debes incluir el nombre del juego"
     }
 
-    if(!info.image || !/^(ftp|https?):\/\/+(www\.)?[a-z0-9\-\.]{3,}\.[a-z]{3}$/.test(info.image)){
+    // if(!info.image || !/^(ftp|https?):\/\/+(www\.)?[a-z0-9\-.]{3,}\.[a-z]{3}$/.test(info.image)){
+        if(!info.image){
         errors.image="Incluye imagen de videojuego, y en formato URL"
     }
         

@@ -8,14 +8,16 @@ const {Op}=require("sequelize")
 const getVideogameByName=async (nameTitle)=>{
     try{
         const videogamesArray=[];
-        const {data}=await axios.get(`${URL}=${nameTitle}&key=${API_KEY}`);
-        if(data && data.results.length>0){
+        const {data}=await axios.get(`${URL}/games?search=${nameTitle}&key=${API_KEY}`);
+        // if(data && data.results.length>0){
             for(let i = 0; i < 15; i++){
                 const { id, name, background_image, genres, rating }=data.results[i];
+
                 const generos= genres.map((genre)=> genre.name);
+                
                 videogamesArray.push({ id, name, background_image, generos, rating })
             }
-        } else{
+        // } else{
             const videogamesFilt=await Videogame.findAll({
                 where: {
                     name:{[Op.iLike]: `%${nameTitle}%`}
@@ -36,15 +38,14 @@ const getVideogameByName=async (nameTitle)=>{
                     videogamesArray.push({ id, name, background_image, generos, rating })
                 }
             }
-        }
-
-        return videogamesArray;
+        // }
+        return videogamesArray
     } catch(error){
         console.error(error);
         throw new Error("No existe este videojuego", error);
     }
 }
 
-// getVideogameByName("grand")
+//  getVideogameByName("the")
 
 module.exports=getVideogameByName;

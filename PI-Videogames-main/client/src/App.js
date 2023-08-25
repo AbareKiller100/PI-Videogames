@@ -1,11 +1,11 @@
 import './App.css';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Landing from './views/Landing';
-import Home from './views/Home';
-import Detail from './views/Detail';
-import Form from './views/Form';
-import Nav from './views/Nav';
-const URL="http://localhost:3001"
+import Landing from './views/Landing.jsx';
+import Home from './views/Home.jsx';
+import Detail from './views/Detail.jsx';
+import Form from './views/Form.jsx';
+import Nav from './views/Nav.jsx';
+
 
 function App() {
   const {pathname}= useLocation()
@@ -23,4 +23,4 @@ function App() {
   );
 }
 
-export {App, URL};
+export {App};

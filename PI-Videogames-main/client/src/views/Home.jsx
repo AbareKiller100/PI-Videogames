@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
-import { filterOrgin, getAllVideogames, ordenar } from "../redux/actions";
-import { SearchBar } from "../components/SearchBar";
-import Filter from "../components/Filter";
-import Order from "../components/Order";
-import Paginado from "../components/Paginado";
-import VideogameCards from "../components/videogameCards";
+import { filterOrigin, getAllVideogames, getVideogamesByName, ordenar } from "../redux/actions.js";
+import SearchBar from "../components/SearchBar.jsx";
+import Filter from "../components/Filter.jsx";
+import Order from "../components/Order.jsx";
+import Paginado from "../components/Paginado.jsx";
+import VideogameCards from "../components/VideogameCards.jsx";
 
 const Home=()=>{
     const dispatch=useDispatch();
@@ -24,7 +24,7 @@ const Home=()=>{
             setStartPag(endPag);
             setEndPag(endPag+15);
         } else{
-            // AQUÍ SE HA DE AÑADIR ALGO
+           alert("Estás en la primer página")
         }
     }
     const prev=()=>{
@@ -32,7 +32,7 @@ const Home=()=>{
             setStartPag(startPag-15);
             setEndPag(endPag-15)
         } else{
-            //ACÁ TAMBIÉN VITEH
+            alert("Terminaste el recorrido")
         }
     }
 
@@ -54,7 +54,7 @@ const Home=()=>{
     }
     const orderGames=(event)=>{
         event.preventDefault();
-        dispatch(ordenar(filter.orden, videogames))
+        dispatch(ordenar(filter.orden, videogamesCopy))
         setFilter({...filter, orden:""})
     }
 
@@ -64,7 +64,7 @@ const Home=()=>{
         setGetName(event.target.value);
     }
     const handleGetGames=(event)=>{
-        event.preventDefault
+        event.preventDefault()
         if(getName===""){
             setStartPag(0);
             setEndPag(15);
@@ -78,10 +78,11 @@ const Home=()=>{
 
     useEffect(()=>{ 
         dispatch(getAllVideogames());
-        return dispatch(getAllVideogames());
+        return (()=> dispatch(getAllVideogames()));
     }, [dispatch])
 
-    return <div>
+    return (
+    <div>
         <SearchBar handleSearch={handleSearch} handleGetGames={handleGetGames}/>
 
         <div>
@@ -90,14 +91,14 @@ const Home=()=>{
         </div>
 
         <div>
-            <VideogameCards pag={pag}/>    
+            <Paginado prev={prev} next={next}/>
         </div>
 
         <div>
-            <Paginado prev={prev} next={next}/>
+            <VideogameCards pag={pag}/>    
         </div>
-        
     </div>
+    )
 }
 
 export default Home;

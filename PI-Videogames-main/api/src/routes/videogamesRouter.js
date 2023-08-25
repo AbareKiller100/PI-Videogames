@@ -1,16 +1,15 @@
-const videogamesRouter=require("express").Router();
-const {getAllVideogames}=require("../controllers/getVideogames");
+const {Router} = require('express');
+const videogamesRouter = Router();
+const {
+    getVideogamesHandler,
+    getIDHandler,
+    getNameHandler,
+    createHandler
+} = require('../handlers/videogamesHandler')
 
-videogamesRouter.get("/", async (req, res)=>{
-    try{
-        const response= await getAllVideogames();
-        if(response.error){
-            return res.status(400).json(response)
-        }   
-        res.status(200).json(response) 
-    } catch(error){
-        res.status(400).json({error: error.message})
-    }
-})
+videogamesRouter.get('/', getVideogamesHandler)
+videogamesRouter.get('/:idVideogame',getIDHandler)
+videogamesRouter.get('/name',getNameHandler)
+videogamesRouter.post('/',createHandler)
 
 module.exports=videogamesRouter;

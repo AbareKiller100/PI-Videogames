@@ -6,6 +6,7 @@ const path = require('path');
 //   DB_USER, DB_PASSWORD, DB_HOST,
 // } = process.env;
 
+// >=12.18.3
 const DB_USER=usuario
 const DB_PASSWORD= constraseña
 const DB_HOST="localhost"

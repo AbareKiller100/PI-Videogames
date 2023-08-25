@@ -5,7 +5,7 @@ const createNewGame= async (name, description, background_image, genres, platfor
         if(!name || !description || !background_image || !genres.length || !platforms.length || !released || !rating){
             return {error: "Faltan datos"}
         }
-        const newGame= await Videogame.create({name, description, background_image, genres, platforms, released, rating});
+        const newGame= await Videogame.create({name, description, background_image, platforms, released, rating});
         newGame.addGenres(genres);
         
         return newGame;

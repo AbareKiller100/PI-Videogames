@@ -1,14 +1,13 @@
-
 const Filter = ({handleOrigin, filterGames}) => {
   return (
-    <div>
+    <form onSubmit={filterGames}>
         <select onChange={handleOrigin}>
             <option value="">default</option>
-            <option value="BD">BD</option>
+            <option value="DB">DB</option>
             <option value="API">API</option>
         </select>
-        <button onClick={filterGames}>Filtrar</button>
-    </div>
+        <button type="submit">Filtrar</button>
+    </form>
   )
 }
 

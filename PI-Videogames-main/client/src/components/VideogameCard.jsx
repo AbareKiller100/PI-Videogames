@@ -2,17 +2,19 @@ import {Link} from "react-router-dom"
 
 const VideogameCard = ({id, name, background_image, genres}) => {
   return (
-    <div>
-        <Link to={`/detail/${id}`}><h2>{name}</h2></Link>
-        <h2>
+    <Link to={`/detail/${id}`}>
+      <div>
+        <h2>{name}</h2>
+        <ul>
             {
-                genres.map((genre)=>{
-                    return <div>{genre}</div> 
-                })
+              genres?.map((genre)=>{
+                return <li>{genre}</li> 
+              })
             }
-        </h2>
+        </ul>
         <h2>{background_image}</h2>
-    </div>
+      </div>
+    </Link>
   )
 }
 

@@ -13,11 +13,11 @@ const getAllGenres= async ()=>{
             const genresDB= await Genre.create({name}); 
         }
 
-        return allGenres;
+        return allGenres
     } catch (error) {
         console.error(error);
         throw new Error("Error al obtener los géneros", error)
     }
 }
-
+// getAllGenres()
 module.exports=getAllGenres;

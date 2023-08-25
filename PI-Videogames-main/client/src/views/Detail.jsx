@@ -17,24 +17,13 @@ const Detail = () => {
   return (
     <div>
         
-        <Link to="/home">Regrese a la página principal</Link>
+        <Link to="/home">Página principal</Link>
 
         <h1>{detailVideogame.name}</h1>
 
         <p>{detailVideogame.description}</p>
 
         <img src={detailVideogame.background_image} alt="Portada del videojuego"/>
-
-        <h2>Platforms:</h2>
-        <ul>
-            {
-                detailVideogame.plataformas?.map((plataforma)=>{
-                    return <li>
-                        {plataforma}
-                    </li>
-                })
-            }
-        </ul>
 
         <h2>Released: {detailVideogame.released}</h2>
 
